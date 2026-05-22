@@ -1,16 +1,89 @@
-# React + Vite
+﻿# Sourav Portfolio 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio built with **React + Vite** to showcase Sourav Danyal's work in AI, Machine Learning, and Data Science.
 
-Currently, two official plugins are available:
+## ✨ Highlights
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- AI-powered portfolio assistant terminal
+- Interactive skills constellation map
+- Featured AI/ML project showcase with tech flow visualizer
+- Certification and education timeline sections
+- Smooth single-page navigation with progress indicator
+- Fully responsive design for desktop and mobile
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React 19, Vite 8
+- **Styling:** CSS Modules
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **AI Integration:** Groq API (via `VITE_GROQ_API_KEY`)
 
-## Expanding the ESLint configuration
+## 📂 Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+src/
+  components/        # UI sections (Hero, About, Skills, Projects, Contact, etc.)
+  data.js            # Portfolio content, skills, projects, certifications, AI prompt
+  App.jsx            # Main page composition
+  main.jsx           # App entry point
+
+public/
+  assets/            # Static files (e.g., resume)
+```
+
+## ⚙️ Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment
+
+Create a `.env` file in the project root:
+
+```env
+VITE_GROQ_API_KEY=your_groq_api_key
+```
+
+### 3. Start development server
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+## 📜 Available Scripts
+
+- `npm run dev` — Run local development server
+- `npm run build` — Create production build
+- `npm run preview` — Preview production build locally
+- `npm run lint` — Run ESLint checks
+
+## 🧠 Project Content Model
+
+Most editable content is centralized in `src/data.js`:
+
+- Navigation links
+- Skills and skill levels
+- Projects and project metadata
+- Certifications
+- Education timeline
+- AI assistant system prompt
+
+This makes updates fast and consistent across the site.
+
+## 🛡️ Important Notes
+
+- Never commit your `.env` file.
+- This is a frontend portfolio project; API key usage should be kept minimal and monitored.
+
+## 👨‍💻 Author
+
+**Sourav Danyal**
+
+- GitHub: https://github.com/Sourav1331
+- LinkedIn: https://linkedin.com/in/sourav-danyal-a8b35232a
