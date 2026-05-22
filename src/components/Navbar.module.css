@@ -1,0 +1,102 @@
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  transition: background 0.3s, border-color 0.3s;
+  border-bottom: 1px solid transparent;
+}
+.scrolled {
+  background: rgba(2,11,20,0.92);
+  backdrop-filter: blur(20px);
+  border-color: var(--border);
+}
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.logo {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #e8f6ff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+}
+.bracket { color: var(--cyan); }
+.blink { color: var(--cyan); animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.links {
+  display: flex;
+  list-style: none;
+  gap: 0.25rem;
+}
+.link {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text2);
+  background: none;
+  border: none;
+  padding: 0.4rem 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.link:hover, .activeLink {
+  color: var(--cyan);
+  border-color: var(--border);
+  background: rgba(56,189,248,0.05);
+}
+.right { display: flex; align-items: center; gap: 0.75rem; }
+.aiBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #020b14;
+  background: var(--cyan);
+  border: none;
+  padding: 0.45rem 1rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  clip-path: polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+}
+.aiBtn:hover { opacity: 0.85; }
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--cyan);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: block; }
+  .links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; left: 0; right: 0;
+    background: rgba(2,11,20,0.98);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    gap: 0.25rem;
+  }
+  .links.open { display: flex; }
+  .link { font-size: 0.85rem; }
+}

@@ -1,0 +1,110 @@
+.overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(2,11,20,0.75);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.open { opacity: 1; pointer-events: all; }
+
+.panel {
+  width: 90%; max-width: 720px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(56,189,248,0.08);
+  display: flex; flex-direction: column;
+  max-height: 82vh;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.open .panel { transform: translateY(0) scale(1); }
+
+.bar {
+  display: flex; align-items: center; justify-content: flex-start; position: relative;
+  padding: 0.7rem 1.1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dots { display: flex; gap: 0.4rem; }
+.dot { width: 11px; height: 11px; border-radius: 50%; cursor: pointer; }
+.red    { background: #ff5f57; }
+.yellow { background: #febc2e; }
+.green  { background: #28c840; }
+.barTitle { font-family: var(--mono); font-size: 0.68rem; color: var(--text2); letter-spacing: 0.08em; position: absolute; left: 50%; transform: translateX(-50%); }
+
+.boot {
+  padding: 1rem 1.4rem 0.5rem;
+  flex-shrink: 0;
+}
+.boot p { font-family: var(--mono); font-size: 0.7rem; color: var(--text2); line-height: 1.8; }
+.bootCyan  { color: var(--cyan); }
+.bootGreen { color: var(--green); }
+.bootMute  { color: var(--text3) !important; }
+
+.history {
+  flex: 1; overflow-y: auto;
+  padding: 0.75rem 1.4rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  min-height: 160px; max-height: 320px;
+}
+.history::-webkit-scrollbar { width: 2px; }
+.history::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.msg { display: flex; flex-direction: column; gap: 0.2rem; animation: msgIn 0.25s ease both; }
+@keyframes msgIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.msgLabel { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.user .msgLabel { color: var(--orange); }
+.ai   .msgLabel { color: var(--cyan); }
+.msgBody {
+  font-family: var(--mono); font-size: 0.8rem; line-height: 1.75;
+  padding: 0.7rem 0.9rem; border-left: 2px solid;
+  white-space: pre-wrap;
+}
+.user .msgBody { border-color: var(--orange); background: rgba(251,146,60,0.06); color: var(--text); }
+.ai   .msgBody { border-color: var(--cyan);   background: rgba(56,189,248,0.05);  color: var(--text); }
+
+.typing { color: var(--text2); }
+.dots3 { animation: ellipsis 1.2s infinite; }
+@keyframes ellipsis {
+  0%  { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+}
+
+.chips {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.chip {
+  font-family: var(--mono); font-size: 0.62rem; color: var(--text2);
+  border: 1px solid var(--border); background: transparent;
+  padding: 0.25rem 0.65rem; cursor: pointer; transition: all 0.2s;
+  letter-spacing: 0.05em;
+}
+.chip:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(56,189,248,0.05); }
+
+.inputRow {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.prompt { font-family: var(--mono); font-size: 0.75rem; color: var(--green); white-space: nowrap; flex-shrink: 0; }
+.input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: var(--mono); font-size: 0.8rem; color: var(--text);
+  caret-color: var(--cyan);
+}
+.input::placeholder { color: var(--text3); }
+.sendBtn {
+  background: var(--cyan); border: none; color: #020b14;
+  font-family: var(--mono); font-weight: 700; font-size: 0.95rem;
+  width: 30px; height: 30px; flex-shrink: 0;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.sendBtn:hover:not(:disabled) { opacity: 0.85; }
+.sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }

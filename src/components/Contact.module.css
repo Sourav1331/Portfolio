@@ -1,0 +1,78 @@
+.sec { background: var(--bg); }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.h2 { margin-bottom: 1rem !important; }
+
+.sub {
+  font-size: 0.97rem;
+  color: var(--text2);
+  line-height: 1.85;
+  max-width: 380px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.clink {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  transition: all 0.22s;
+  position: relative;
+}
+.clink:hover {
+  border-color: var(--cyan);
+  background: var(--bg3);
+  transform: translateX(4px);
+}
+.clink:hover .clinkIcon { color: var(--cyan); border-color: rgba(56,189,248,0.4); }
+.clink:hover .arrow { opacity: 1; color: var(--cyan); }
+
+.clinkIcon {
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.88rem;
+  color: var(--text2); flex-shrink: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.clinkLabel {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.22rem;
+}
+
+.clinkVal {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.arrow {
+  margin-left: auto;
+  font-size: 1rem;
+  color: var(--text3);
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; gap: 3rem; }
+  .sub { max-width: 100%; }
+}

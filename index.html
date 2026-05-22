@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sourav Danyal - AI Engineer, Data Scientist, ML Engineer" />
+    <title>Sourav Danyal | AI & Data Science Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <script>
+      const titles = [
+        '⚡ Sourav Danyal',
+        '🤖 AI Engineer',
+        '🧠 ML Engineer',
+        '📊 Data Scientist',
+        '🔍 RAG Specialist',
+      ];
+      let idx = 0;
+      let intervalId = null;
+
+      function startCycling() {
+        if (intervalId) return; // already running, don't start again
+        intervalId = setInterval(() => {
+          idx = (idx + 1) % titles.length;
+          document.title = titles[idx];
+        }, 2500);
+      }
+
+      function stopCycling() {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          stopCycling();           // kill interval immediately
+          document.title = '👋 Come back to my portfolio!';
+        } else {
+          // Tab is visible again — resume from current index
+          document.title = titles[idx];
+          startCycling();
+        }
+      });
+
+      // Only start cycling when tab is actually visible
+      if (!document.hidden) {
+        startCycling();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
