@@ -119,23 +119,23 @@ export const PROJECTS = [
 export const CERTIFICATIONS = [
   {
     id: 1,
-    title: 'Data Science Professional',
-    issuer: 'Coursera',
-    date: '2024',
+    title: 'The Ultimate Job Ready Data Science Course',
+    issuer: 'CodeWithHarry',
+    date: 'Oct 2025',
     badge: '📊',
     color: 'cyan',
-    skills: ['Python', 'ML', 'Data Analysis', 'Visualization'],
-    verify: 'https://coursera.org',
+    skills: ['Python', 'Data Science', 'ML', 'Data Analysis', 'Visualization'],
+    verify: '#',
   },
   {
     id: 2,
-    title: 'Generative AI with LLMs',
-    issuer: 'Coursera · DeepLearning.AI',
-    date: '2024',
+    title: 'Generative AI Course',
+    issuer: 'Unisole Empower',
+    date: '2025',
     badge: '🤖',
     color: 'green',
-    skills: ['LLMs', 'Fine-tuning', 'RAG', 'Prompt Engineering'],
-    verify: 'https://coursera.org',
+    skills: ['Generative AI', 'LLMs', 'Advanced AI Principles'],
+    verify: '#',
   },
 ];
 
@@ -172,8 +172,8 @@ PROJECTS:
 3. RAG Log Data QA — LangChain + ChromaDB, semantic retrieval, LLM answer generation, anomaly detection.
 
 CERTIFICATIONS:
-- Data Science Professional — Coursera (2024)
-- Generative AI with LLMs — Coursera · DeepLearning.AI (2024)
+- The Ultimate Job Ready Data Science Course — CodeWithHarry (Oct 2025)
+- Generative AI Course — Unisole Empower NIT Hamirpur (2025)
 
 LOOKING FOR: AI/ML internships, research collaborations, full-time Data Scientist / ML Engineer / AI Engineer roles.
 
