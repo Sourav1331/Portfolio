@@ -76,10 +76,6 @@ Most editable content is centralized in `src/data.js`:
 
 This makes updates fast and consistent across the site.
 
-## 🛡️ Important Notes
-
-- Never commit your `.env` file.
-- This is a frontend portfolio project; API key usage should be kept minimal and monitored.
 
 ## 👨‍💻 Author
 
