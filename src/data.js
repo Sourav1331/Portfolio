@@ -125,7 +125,7 @@ export const CERTIFICATIONS = [
     badge: '📊',
     color: 'cyan',
     skills: ['Python', 'Data Science', 'ML', 'Data Analysis', 'Visualization'],
-    verify: '#',
+    verify: '/assets/Data_science_certificate.pdf',
   },
   {
     id: 2,
@@ -135,7 +135,7 @@ export const CERTIFICATIONS = [
     badge: '🤖',
     color: 'green',
     skills: ['Generative AI', 'LLMs', 'Advanced AI Principles'],
-    verify: '#',
+    verify: '/assets/Gen_AI_certificate.pdf',
   },
 ];
 
