@@ -49,6 +49,12 @@
 .link:hover { color: var(--cyan); }
 .liveLink { color: var(--green) !important; }
 .liveLink:hover { color: var(--cyan) !important; }
+.disabledLink,
+.disabledLink:hover {
+  color: var(--text3) !important;
+  cursor: not-allowed;
+  opacity: 0.55;
+}
 
 .glow {
   position: absolute; bottom: 0; left: 0; right: 0;

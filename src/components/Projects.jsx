@@ -47,10 +47,26 @@ export default function Projects() {
                 {/* Tech Stack Visualizer */}
                 {p.stack && <StackVisualizer stack={p.stack} />}
                 <div className={styles.footer}>
-                  <a href={p.github} target="_blank" rel="noopener noreferrer" className={styles.link}>GitHub →</a>
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noopener noreferrer" className={`${styles.link} ${styles.liveLink}`}>↗ Live Demo</a>
-                  )}
+                  <a
+                    href={p.github || '#projects'}
+                    target={p.github ? '_blank' : undefined}
+                    rel={p.github ? 'noopener noreferrer' : undefined}
+                    aria-disabled={!p.github}
+                    onClick={e => { if (!p.github) e.preventDefault() }}
+                    className={`${styles.link} ${!p.github ? styles.disabledLink : ''}`}
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href={p.live || '#projects'}
+                    target={p.live ? '_blank' : undefined}
+                    rel={p.live ? 'noopener noreferrer' : undefined}
+                    aria-disabled={!p.live}
+                    onClick={e => { if (!p.live) e.preventDefault() }}
+                    className={`${styles.link} ${styles.liveLink} ${!p.live ? styles.disabledLink : ''}`}
+                  >
+                    Live Demo
+                  </a>
                 </div>
               </div>
               <div className={`${styles.glow} ${p.featured ? styles.glowFeat : ''}`} />

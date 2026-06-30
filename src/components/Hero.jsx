@@ -217,7 +217,7 @@ export default function Hero() {
             >
               View Projects →
             </a>
-            <a href="/assets/resume.pdf" download="Sourav_Danyal_Resume.pdf" className="btn-ghost">
+            <a href="/assets/Resume.pdf" download="Sourav_Danyal_Resume.pdf" className="btn-ghost">
               ↓ Download Resume
             </a>
           </div>
