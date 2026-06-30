@@ -59,59 +59,60 @@ export const CONSTELLATION_SKILLS = [
 export const PROJECTS = [
   {
     id: 1,
-    emoji: '🎬',
-    title: 'Movie Recommendation System',
-    desc: 'Interactive Streamlit app recommending movies via content-based filtering and cosine similarity on TMDB metadata. Processes 5000+ movies with real-time poster fetching.',
-    tags: ['Streamlit', 'Scikit-learn', 'Pandas', 'TMDB API'],
-    tagColor: 'orange',
-    features: ['Content-based filtering engine', 'Cosine similarity on TF-IDF vectors', 'Live TMDB API poster integration'],
-    github: 'https://github.com/Sourav1331/Movie-Recommendation-System',
-    live: 'https://movie-recommendation-system-013.streamlit.app/',
+    emoji: 'AI',
+    title: 'Multi-Agent AI Research Assistant',
+    desc: 'Full-stack AI research assistant built with FastAPI, React, LangGraph, LangChain, Groq LLaMA 3.1, Tavily Search, ChromaDB, and Hugging Face embeddings.',
+    tags: ['FastAPI', 'React', 'LangGraph', 'RAG'],
+    tagColor: 'cyan',
+    featured: true,
+    features: ['Multi-agent researcher, summarizer, writer, and fact-checker workflow', 'Real-time streaming with Server-Sent Events', 'Dockerized frontend/backend deployment architecture'],
+    github: 'https://github.com/Sourav1331/Multi-Agent-Research-System',
+    live: 'https://multi-agent-research-system-rose.vercel.app/',
     stack: [
-      { label: 'TMDB Dataset', type: 'data' },
-      { label: 'Pandas / NumPy', type: 'process' },
-      { label: 'TF-IDF + Cosine Similarity', type: 'model' },
-      { label: 'Scikit-learn', type: 'framework' },
-      { label: 'Streamlit UI', type: 'output' },
-      { label: 'TMDB API', type: 'api' },
+      { label: 'Tavily Search', type: 'data' },
+      { label: 'LangGraph Agents', type: 'process' },
+      { label: 'ChromaDB + HF Embeddings', type: 'model' },
+      { label: 'LangChain + Groq LLaMA 3.1', type: 'framework' },
+      { label: 'FastAPI SSE Backend', type: 'api' },
+      { label: 'React Research UI', type: 'output' },
     ],
   },
   {
     id: 2,
-    emoji: '🏠',
-    title: 'House Price Prediction',
-    desc: 'End-to-end ML pipeline with ColumnTransformer preprocessing, stratified sampling, and RandomForestRegressor. Includes Joblib model persistence and Flask REST API.',
-    tags: ['Scikit-learn', 'RandomForest', 'Flask', 'Joblib'],
-    tagColor: 'cyan',
-    featured: true,
-    features: ['Full ML pipeline with ColumnTransformer', 'Stratified train-test splitting', 'REST API with Flask'],
-    github: 'https://github.com/Sourav1331/Python-Projects',
-    live: null,
+    emoji: 'DOC',
+    title: 'DocRAG Studio: AI Document Analyzer',
+    desc: 'Production-ready full-stack RAG application for semantic search, document chat, and question answering across PDF, CSV, Excel, TXT, and DOCX files.',
+    tags: ['FastAPI', 'LangChain', 'ChromaDB', 'Groq'],
+    tagColor: 'green',
+    features: ['Per-file context isolation with source-cited responses', 'RESTful APIs for scalable document ingestion and querying', 'Containerized frontend/backend with Docker'],
+    github: 'https://github.com/Sourav1331/rag-document-analyzer',
+    live: 'https://rag-document-analyzer-indol.vercel.app',
     stack: [
-      { label: 'Housing Dataset', type: 'data' },
-      { label: 'ColumnTransformer', type: 'process' },
-      { label: 'RandomForestRegressor', type: 'model' },
-      { label: 'Scikit-learn + Joblib', type: 'framework' },
-      { label: 'Flask REST API', type: 'output' },
+      { label: 'PDF / CSV / XLSX / TXT / DOCX', type: 'data' },
+      { label: 'Chunking + Metadata', type: 'process' },
+      { label: 'Hugging Face Embeddings', type: 'model' },
+      { label: 'ChromaDB Vector Store', type: 'framework' },
+      { label: 'FastAPI RAG APIs', type: 'api' },
+      { label: 'React Document Chat', type: 'output' },
     ],
   },
   {
     id: 3,
-    emoji: '🔍',
-    title: 'RAG-based Log Data QA',
-    desc: 'Natural language querying of log data via Retrieval-Augmented Generation. Semantic vector search retrieves relevant log chunks; LLM synthesizes precise answers.',
-    tags: ['LangChain', 'RAG', 'ChromaDB', 'LLM'],
-    tagColor: 'green',
-    features: ['Semantic vector retrieval (ChromaDB)', 'LLM-based answer generation', 'Log anomaly detection'],
-    github: 'https://github.com/Sourav1331/LLMs',
-    live: null,
+    emoji: 'MOV',
+    title: 'Movie Recommendation System',
+    desc: 'Content-based movie recommendation engine using cosine similarity on a TMDB dataset of 5000+ films, built with Python, Pandas, and Scikit-learn.',
+    tags: ['Python', 'Pandas', 'Scikit-learn', 'Streamlit'],
+    tagColor: 'orange',
+    features: ['Interactive Streamlit app with real-time poster and trailer retrieval', 'TMDB API integration with cached API calls', 'Secure environment-based API key management'],
+    github: 'https://github.com/Sourav1331/Movie-Recommendation-System',
+    live: 'https://movie-recommendation-system-013.streamlit.app/',
     stack: [
-      { label: 'Log Files', type: 'data' },
-      { label: 'Text Chunking', type: 'process' },
-      { label: 'Embeddings + ChromaDB', type: 'model' },
-      { label: 'LangChain', type: 'framework' },
-      { label: 'LLM Answer Generation', type: 'output' },
-      { label: 'Streamlit UI', type: 'api' },
+      { label: 'TMDB Dataset', type: 'data' },
+      { label: 'Pandas Feature Prep', type: 'process' },
+      { label: 'Cosine Similarity', type: 'model' },
+      { label: 'Scikit-learn Recommender', type: 'framework' },
+      { label: 'TMDB Poster / Trailer API', type: 'api' },
+      { label: 'Streamlit App', type: 'output' },
     ],
   },
 ];
@@ -167,10 +168,9 @@ SKILLS:
 - Tools: Git, GitHub, VS Code, Jupyter, OOP, DSA, DBMS
 
 PROJECTS:
-1. Movie Recommendation System — Streamlit app, content-based filtering, cosine similarity, TMDB API, 5000+ movies. Live: https://movie-recommendation-system-013.streamlit.app/
-2. House Price Prediction — Scikit-learn pipeline, ColumnTransformer, RandomForestRegressor, Joblib, Flask REST API.
-3. RAG Log Data QA — LangChain + ChromaDB, semantic retrieval, LLM answer generation, anomaly detection.
-
+1. Multi-Agent AI Research Assistant - Full-stack AI research assistant using FastAPI, React, LangGraph, LangChain, Groq LLaMA 3.1, Tavily Search, ChromaDB, and Hugging Face embeddings.
+2. DocRAG Studio: AI Document Analyzer - Production-ready full-stack RAG app for semantic search, document chat, and QA across PDF, CSV, Excel, TXT, and DOCX files.
+3. Movie Recommendation System - Streamlit content-based recommendation engine using cosine similarity on 5000+ TMDB films, with poster/trailer retrieval and secure TMDB API key handling.
 CERTIFICATIONS:
 - The Ultimate Job Ready Data Science Course — CodeWithHarry (Oct 2025)
 - Generative AI Course — Unisole Empower NIT Hamirpur (2025)
