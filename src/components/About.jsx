@@ -30,7 +30,7 @@ export default function About() {
             <div className={styles.facts}>
               {[
                 ['Location', 'Himachal Pradesh, IN'],
-                ['Degree',   'MCA · 2024–Present'],
+                ['Degree',   'MCA · 2024-2026'],
                 ['College',  'Central Uni. of HP'],
                 ['Email',    'souravdanyal04@gmail.com'],
               ].map(([k,v]) => (

@@ -141,7 +141,7 @@ export const CERTIFICATIONS = [
 ];
 
 export const TIMELINE = [
-  { period: '2024 – Present', title: 'MCA — Central University of HP',             sub: 'Master of Computer Applications · AI & Data Science Track' },
+  { period: '2024 – 2026', title: 'MCA — Central University of HP',             sub: 'Master of Computer Applications · AI & Data Science Track' },
   { period: 'Jun 2025',       title: 'UGC NET Qualified',                           sub: 'Computer Science & Applications · Eligible for PhD Admission' },
   { period: '2021 – 2024',    title: 'B.Sc — Govt. Degree College Shahpur (HPU)',   sub: 'Mathematics · Computer Science · Physics' },
 ];
@@ -155,7 +155,7 @@ SOURAV DANYAL — Full Profile:
 - LinkedIn: https://linkedin.com/in/sourav-danyal-a8b35232a
 
 EDUCATION:
-- MCA, Central University of Himachal Pradesh (2024–Present) — AI & Data Science
+- MCA, Central University of Himachal Pradesh (2024–2026) — AI & Data Science
 - UGC NET Qualified (Computer Science), June 2025 — PhD eligible
 - B.Sc (Maths, CS, Physics), Govt. Degree College Shahpur, HPU (2021–2024)
 
