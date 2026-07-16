@@ -49,7 +49,7 @@ export default function About() {
               <span className="glow-cyan">One Model at a Time.</span>
             </h2>
             <p className={`${styles.para} reveal`}>
-              I'm a <strong>Data Science & AI Engineer</strong> pursuing my MCA at Central University of Himachal Pradesh.
+              I'm a <strong>Data Science & AI Engineer</strong> with an MCA from the Central University of Himachal Pradesh.
               My work spans the full AI lifecycle — from raw data exploration to deploying production-ready ML models and RAG-powered LLM applications.
             </p>
             <p className={`${styles.para} reveal`}>
