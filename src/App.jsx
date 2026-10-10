@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -13,12 +13,6 @@ import './App.css'
 
 export default function App() {
   const [termOpen, setTermOpen] = useState(false)
-
-  useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') setTermOpen(false) }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [])
 
   return (
     <>

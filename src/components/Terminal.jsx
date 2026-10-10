@@ -10,6 +10,17 @@ const CHIPS = [
   { label: 'Contact',      q: 'How can I contact Sourav?' },
 ]
 
+function formatAssistantText(text) {
+  return text
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/\*([^*\n]+)\*/g, '$1')
+    .replace(/_([^_\n]+)_/g, '$1')
+    .replace(/`([^`\n]+)`/g, '$1')
+    .replace(/^\s*[-*]\s+/gm, '• ')
+}
+
 export default function Terminal({ open, onClose }) {
   const [messages, setMessages] = useState([])
   const [input, setInput]       = useState('')
@@ -29,6 +40,10 @@ export default function Terminal({ open, onClose }) {
     const q = text?.trim() || input.trim()
     if (!q || loading) return
     setInput('')
+    if (q.toLowerCase() === 'exit') {
+      onClose()
+      return
+    }
     setMessages(prev => [...prev, { role: 'user', text: q }])
     setLoading(true)
 
@@ -44,7 +59,7 @@ export default function Terminal({ open, onClose }) {
           'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-20b',
           max_tokens: 600,
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
@@ -72,12 +87,12 @@ export default function Terminal({ open, onClose }) {
   }
 
   return (
-    <div className={`${styles.overlay} ${open ? styles.open : ''}`} onClick={e => e.target === e.currentTarget && onClose()}>
+    <div className={`${styles.overlay} ${open ? styles.open : ''}`}>
       <div className={styles.panel} role="dialog" aria-label="AI Terminal">
         {/* Title bar */}
         <div className={styles.bar}>
           <div className={styles.dots}>
-            <span className={`${styles.dot} ${styles.red}`} onClick={onClose} title="Close" />
+            <button type="button" className={`${styles.dot} ${styles.red}`} onClick={onClose} title="Exit chatbot" aria-label="Exit chatbot" />
             <span className={`${styles.dot} ${styles.yellow}`} />
             <span className={`${styles.dot} ${styles.green}`} />
           </div>
@@ -87,7 +102,7 @@ export default function Terminal({ open, onClose }) {
         {/* Boot */}
         <div className={styles.boot}>
           <p><span className={styles.bootCyan}>Initializing Sourav's AI Assistant…</span></p>
-          <p className={styles.bootMute}>Ask me anything about Sourav — skills, projects, education, or contact.</p>
+          <p className={styles.bootMute}>Ask me anything about Sourav — skills, projects, education, or contact. Type "exit" to close.</p>
           <p className={styles.bootMute}>─────────────────────────────────────────</p>
         </div>
 
@@ -96,7 +111,7 @@ export default function Terminal({ open, onClose }) {
           {messages.map((m, i) => (
             <div className={`${styles.msg} ${m.role === 'user' ? styles.user : styles.ai}`} key={i}>
               <div className={styles.msgLabel}>{m.role === 'user' ? '▶ you' : '◆ sourav-ai'}</div>
-              <div className={styles.msgBody}>{m.text}</div>
+              <div className={styles.msgBody}>{m.role === 'assistant' ? formatAssistantText(m.text) : m.text}</div>
             </div>
           ))}
           {loading && (

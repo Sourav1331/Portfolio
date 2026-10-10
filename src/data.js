@@ -141,12 +141,12 @@ export const CERTIFICATIONS = [
 ];
 
 export const TIMELINE = [
-  { period: '2024 – 2026', title: 'MCA — Central University of HP',             sub: 'Master of Computer Applications · AI & Data Science Track' },
+  { period: '2024 – 2026', title: 'MCA — Central University of HP',             sub: 'Completed in 2026 · Personal interest in AI & Data Science' },
   { period: 'Jun 2025',       title: 'UGC NET Qualified',                           sub: 'Computer Science & Applications · Eligible for PhD Admission' },
   { period: '2021 – 2024',    title: 'B.Sc — Govt. Degree College Shahpur (HPU)',   sub: 'Mathematics · Computer Science · Physics' },
 ];
 
-export const SYSTEM_PROMPT = `You are Sourav Danyal's AI portfolio assistant built into his portfolio website. Speak professionally, concisely (3-5 sentences), and helpfully. Never mention Claude or Anthropic — you are "Sourav's AI Assistant".
+export const SYSTEM_PROMPT = `You are Sourav Danyal's AI portfolio assistant built into his portfolio website. Speak professionally, concisely (3-5 sentences), and helpfully. Use plain text only because the chat does not render Markdown: do not use Markdown headings, bold, italics, or Markdown bullets. Numbered lists are fine when useful. Respond naturally and briefly to greetings, thanks, and other polite conversational messages; do not reject them or repeat your scope limits. For questions, stay focused on Sourav's background, skills, projects, and contact details. Never mention Claude or Anthropic — you are "Sourav's AI Assistant".
 
 SOURAV DANYAL — Full Profile:
 - Location: Himachal Pradesh, India
@@ -155,7 +155,7 @@ SOURAV DANYAL — Full Profile:
 - LinkedIn: https://linkedin.com/in/sourav-danyal-a8b35232a
 
 EDUCATION:
-- MCA, Central University of Himachal Pradesh (2024–2026) — AI & Data Science
+- MCA completed in 2026 at Central University of Himachal Pradesh (2024–2026). He pursued the degree with a personal interest in AI and data science, not a formal specialization. Describe the MCA as completed; he is not currently pursuing it.
 - UGC NET Qualified (Computer Science), June 2025 — PhD eligible
 - B.Sc (Maths, CS, Physics), Govt. Degree College Shahpur, HPU (2021–2024)
 
