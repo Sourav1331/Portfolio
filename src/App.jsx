@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -8,21 +8,34 @@ import Certifications from './components/Certifications'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Terminal from './components/Terminal'
-import SectionProgress from './components/SectionProgress'
 import './App.css'
 
 export default function App() {
   const [termOpen, setTermOpen] = useState(false)
 
+  useEffect(() => {
+    const originalTitle = document.title
+    const updateTitle = () => {
+      document.title = document.hidden ? 'Come back to my portfolio!' : originalTitle
+    }
+
+    updateTitle()
+    document.addEventListener('visibilitychange', updateTitle)
+    return () => {
+      document.removeEventListener('visibilitychange', updateTitle)
+      document.title = originalTitle
+    }
+  }, [])
+
   return (
     <>
+      <a className="skip-link" href="#main">Skip to content</a>
       <Navbar onTerminal={() => setTermOpen(true)} />
-      <SectionProgress />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
+        <Projects />
         <About />
         <Skills />
-        <Projects />
         <Certifications />
         <Contact />
       </main>

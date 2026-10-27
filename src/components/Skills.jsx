@@ -1,96 +1,35 @@
-import { useEffect, useRef } from 'react'
-import { SKILLS, SKILL_LEVELS } from '../data'
-import Constellation from './Constellation'
+import { ArrowDown, Braces, Database, Workflow } from 'lucide-react'
+import { SKILLS } from '../data'
+import Reveal from './Reveal'
 import styles from './Skills.module.css'
 
-const LEVEL_CONFIG = {
-  'Beginner':              { color: '#fb923c', width: '30%',  dots: 1 },
-  'Beginner–Intermediate': { color: '#f59e0b', width: '55%',  dots: 2 },
-  'Intermediate':          { color: '#34d399', width: '75%',  dots: 3 },
-  'Advanced':              { color: '#38bdf8', width: '95%',  dots: 4 },
-}
+const disciplines = [
+  { icon: Workflow, title: 'Generative AI & agents', description: 'Connecting language models to the information and tools they need. RAG pipelines, document search, and coordinated agent workflows.', tags: ['LangChain', 'LangGraph', 'ChromaDB', 'LLMs', 'RAG'] },
+  { icon: Database, title: 'Machine learning & data', description: 'Finding structure in raw data. Exploration, feature engineering, model training, and recommendation systems built on solid fundamentals.', tags: ['Python', 'Scikit-learn', 'Pandas', 'NumPy', 'SQL'] },
+  { icon: Braces, title: 'Applications & deployment', description: 'Taking an idea beyond the notebook. APIs, responsive interfaces, and containerized applications that bring the whole system together.', tags: ['FastAPI', 'Flask', 'React', 'Streamlit', 'Docker'] },
+]
 
 export default function Skills() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const els = ref.current?.querySelectorAll('.reveal') || []
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return
-        e.target.classList.add('visible')
-        io.unobserve(e.target)
-      })
-    }, { threshold: 0.12 })
-    els.forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
   return (
-    <section id="skills" ref={ref} className={styles.sec}>
-      <div className="section">
-        <div className="section-tag">skills</div>
-        <h2 className="section-title reveal">Technical Arsenal</h2>
-
-        {/* Constellation */}
-        <div className={`${styles.constellationWrap} reveal`}>
-          <div className={styles.constellationLabel}>// hover any node to explore skills</div>
-          <Constellation />
-        </div>
-
-        {/* Chip grid */}
-        <div className={styles.grid}>
-          {SKILLS.map(s => (
-            <div className={`${styles.card} ${s.accent ? styles.accent : ''} reveal`} key={s.category}>
-              <div className={styles.cardHead}>
-                <span className={styles.icon}>{s.icon}</span>
-                <span className={styles.catName}>{s.category}</span>
-              </div>
-              <div className={styles.chips}>
-                {s.items.map(item => (
-                  <span className={`${styles.chip} ${s.accent ? styles.chipAccent : ''}`} key={item}>{item}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Honest skill level table */}
-        <div className={`${styles.levelSection} reveal`}>
-          <div className={styles.levelTitle}>// skill levels — self assessed based on projects & coursework</div>
-          <div className={styles.levelTable}>
-            <div className={styles.tableHead}>
-              <span>Skill</span>
-              <span>Level</span>
-              <span className={styles.hideSmall}>Based on</span>
-              <span>Scale</span>
-            </div>
-            {SKILL_LEVELS.map(s => {
-              const cfg = LEVEL_CONFIG[s.level] || LEVEL_CONFIG['Beginner']
-              return (
-                <div className={styles.tableRow} key={s.name}>
-                  <span className={styles.skillName}>{s.name}</span>
-                  <span className={styles.levelBadge} style={{ color: cfg.color, borderColor: cfg.color + '44', background: cfg.color + '11' }}>
-                    {s.level}
-                  </span>
-                  <span className={`${styles.skillNote} ${styles.hideSmall}`}>{s.note}</span>
-                  <div className={styles.scaleTrack}>
-                    <div className={styles.scaleFill} style={{ '--fill-color': cfg.color, '--fill-width': cfg.width }} />
-                  </div>
-                </div>
-              )
-            })}
-            {/* Legend */}
-            <div className={styles.legend}>
-              {Object.entries(LEVEL_CONFIG).map(([label, cfg]) => (
-                <div className={styles.legendItem} key={label}>
-                  <span className={styles.legendDot} style={{ background: cfg.color }} />
-                  <span style={{ color: cfg.color }}>{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+    <section id="skills" className="section container" aria-labelledby="skills-heading">
+      <Reveal className="section-label eyebrow" distance={12}><span>03</span><span>What I bring to the table</span></Reveal>
+      <Reveal className={styles.heading} delay={60}>
+        <h2 id="skills-heading" className="section-title">The right tools.<br /><em>The bigger picture.</em></h2>
+        <p>I care about how the pieces fit together.<br />These are the areas I’m building in.</p>
+      </Reveal>
+      <div className={styles.disciplines}>
+        {disciplines.map(({ icon: Icon, title, description, tags }, index) => (
+          <Reveal className={styles.discipline} key={title} delay={index * 100}>
+            <div className={styles.iconRow}><Icon size={24} strokeWidth={1.2} /><span className="eyebrow">0{index + 1}</span></div>
+            <h3>{title}</h3><p>{description}</p>
+            <div className={styles.tags}>{tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+          </Reveal>
+        ))}
       </div>
+      <details className={styles.toolkit}>
+        <summary><span>Also in the toolkit <span>Libraries, languages & fundamentals</span></span><ArrowDown size={15} /></summary>
+        <div className={styles.toolkitGrid}>{SKILLS.map(group => <div key={group.category}><h3>{group.category}</h3><p>{group.items.join(' · ')}</p></div>)}</div>
+      </details>
     </section>
   )
 }

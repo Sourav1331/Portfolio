@@ -4,18 +4,23 @@ A modern, interactive portfolio built with **React + Vite** to showcase Sourav D
 
 ## ✨ Highlights
 
-- AI-powered portfolio assistant terminal
-- Interactive skills constellation map
-- Featured AI/ML project showcase with tech flow visualizer
-- Certification and education timeline sections
-- Smooth single-page navigation with progress indicator
-- Fully responsive design for desktop and mobile
+- Editorial design with locally hosted DM Sans, DM Mono, and Instrument Serif fonts
+- Original animated copper sculpture with pause controls and reduced-motion support
+- Staggered headline entrances, scroll reveals, and interactive project artwork with reduced-motion support
+- Filterable AI/ML project showcase with custom visuals, detailed case studies, and keyboard-accessible architecture explorers
+- Real project interface screenshots and repository-backed descriptions of engineering choices
+- Light and dark themes that follow the system preference and remember a visitor's selection
+- Custom 1200 × 630 social sharing image with Open Graph and Twitter metadata
+- Scroll-responsive Himachal mountain illustration with reduced-motion support
+- Education, expertise, and downloadable certification sections
+- Accessible AI assistant dialog, mobile navigation, and email-copy interaction
+- Responsive layouts verified from 320px to 1920px
 
 ## 🛠️ Tech Stack
 
 - **Frontend:** React 19, Vite 8
 - **Styling:** CSS Modules
-- **Animations:** Framer Motion
+- **Visuals:** Canvas 2D, SVG, and CSS
 - **Icons:** Lucide React
 - **AI Integration:** Groq API (via `VITE_GROQ_API_KEY`)
 
@@ -25,11 +30,13 @@ A modern, interactive portfolio built with **React + Vite** to showcase Sourav D
 src/
   components/        # UI sections (Hero, About, Skills, Projects, Contact, etc.)
   data.js            # Portfolio content, skills, projects, certifications, AI prompt
+  projectStudies.js  # Case-study narratives, architecture steps, and screenshot metadata
   App.jsx            # Main page composition
   main.jsx           # App entry point
 
 public/
-  assets/            # Static files (e.g., resume)
+  assets/            # Resume, certificates, and social-preview.png
+    projects/        # Screenshots of deployed project interfaces
 ```
 
 ## ⚙️ Getting Started
@@ -74,7 +81,9 @@ Most editable content is centralized in `src/data.js`:
 - Education timeline
 - AI assistant system prompt
 
-This makes updates fast and consistent across the site.
+Case-study copy, architecture steps, and screenshot captions are in `src/projectStudies.js`, keyed by the project IDs in `src/data.js`. Screenshot files live in `public/assets/projects/`; they show the deployed interfaces and are not performance benchmarks.
+
+The sharing image is `public/assets/social-preview.png` (1200 × 630). Canonical and social URLs in `index.html` use `https://www.souravdanyal.me/`; update those URLs together if the production domain changes. Share previews will use the new image after the site is deployed and the sharing service refreshes its cache.
 
 
 ## 👨‍💻 Author

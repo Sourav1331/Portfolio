@@ -1,76 +1,33 @@
-import { useEffect, useRef } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { TIMELINE } from '../data'
+import Reveal from './Reveal'
+import MountainLandscape from './MountainLandscape'
 import styles from './About.module.css'
 
 export default function About() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const els = ref.current?.querySelectorAll('.reveal') || []
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target) } })
-    }, { threshold: 0.15 })
-    els.forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
   return (
-    <section id="about" ref={ref}>
-      <div className="section">
-        <div className="section-tag">about</div>
+    <section id="about" className={styles.section} aria-labelledby="about-heading">
+      <div className="container section">
+        <Reveal className="section-label eyebrow" distance={12}><span>02</span><span>A little about me</span></Reveal>
         <div className={styles.layout}>
-          {/* Left */}
-          <div className={`${styles.left} reveal`}>
-            <div className={styles.avatar}>
-              <div className={styles.ring1} />
-              <div className={styles.ring2} />
-              <div className={styles.core}><span>SD</span></div>
-              <span className={styles.badge1}>UGC NET ✓</span>
-              <span className={styles.badge2}>MCA</span>
-            </div>
-            <div className={styles.facts}>
-              {[
-                ['Location', 'Himachal Pradesh, IN'],
-                ['Degree',   'MCA · 2024-2026'],
-                ['College',  'Central Uni. of HP'],
-                ['Email',    'souravdanyal04@gmail.com'],
-              ].map(([k,v]) => (
-                <div className={styles.factRow} key={k}>
-                  <span className={styles.factKey}>{k}</span>
-                  <span className={styles.factVal}>{v}</span>
-                </div>
-              ))}
-            </div>
+          <div className={styles.left}>
+            <Reveal as="h2" id="about-heading" className="section-title" delay={60}>Curiosity is the<br /><em>starting point.</em></Reveal>
+            <Reveal as="figure" className={styles.portrait} delay={120} distance={18}>
+              <div className={styles.portraitFrame}>
+                <div className={styles.portraitImage}><img src="/assets/profile.jpeg" alt="Sourav Danyal by the water" width="4160" height="3127" loading="lazy" decoding="async" /></div>
+              </div>
+              <figcaption><strong>Sourav Danyal</strong><span>AI & Data Science</span></figcaption>
+            </Reveal>
+            <MountainLandscape />
           </div>
-
-          {/* Right */}
-          <div className={styles.right}>
-            <h2 className={`section-title reveal`}>
-              Building the Future,<br />
-              <span className="glow-cyan">One Model at a Time.</span>
-            </h2>
-            <p className={`${styles.para} reveal`}>
-              I'm a <strong>Data Science & AI Engineer</strong> with an MCA from the Central University of Himachal Pradesh.
-              My work spans the full AI lifecycle — from raw data exploration to deploying production-ready ML models and RAG-powered LLM applications.
-            </p>
-            <p className={`${styles.para} reveal`}>
-              I qualified <strong>UGC NET (Computer Science)</strong> in June 2025, making me eligible for PhD admission — a testament to my deep theoretical grounding alongside hands-on engineering. I believe AI must solve real problems, not just benchmark well.
-            </p>
-
-            <div className={`${styles.timeline} reveal`}>
-              {TIMELINE.map((t, i) => (
-                <div className={styles.tlItem} key={i}>
-                  <div className={styles.tlMarker}>
-                    <div className={styles.tlDot} />
-                    {i < TIMELINE.length - 1 && <div className={styles.tlLine} />}
-                  </div>
-                  <div className={styles.tlBody}>
-                    <div className={styles.tlPeriod}>{t.period}</div>
-                    <div className={styles.tlTitle}>{t.title}</div>
-                    <div className={styles.tlSub}>{t.sub}</div>
-                  </div>
-                </div>
-              ))}
+          <div className={styles.bio}>
+            <Reveal as="p" className={styles.lead} delay={80}>An engineer’s mindset.<br />A researcher’s curiosity.</Reveal>
+            <Reveal as="p" delay={120}>I’m Sourav, an AI and Data Science engineer based in the foothills of the Himalayas. I enjoy taking a messy question, understanding the data behind it, and building something people can actually use.</Reveal>
+            <Reveal as="p" delay={160}>I completed my MCA at the Central University of Himachal Pradesh in 2026 and qualified UGC NET in Computer Science. My projects bring that theoretical foundation into practice: from multi-agent research workflows to document intelligence and recommendation systems.</Reveal>
+            <div className={styles.education}>
+              {TIMELINE.map((item, index) => <Reveal className={styles.educationRow} key={item.title} delay={index * 80} distance={16}><span>{item.period}</span><div><h3>{item.title}</h3><p>{item.sub}</p></div></Reveal>)}
             </div>
+            <a className="text-link" href="/assets/Resume.pdf" target="_blank" rel="noopener noreferrer">The full story, in my résumé <ArrowUpRight size={15} /></a>
           </div>
         </div>
       </div>

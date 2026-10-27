@@ -4,49 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Sourav Danyal - AI Engineer, Data Scientist, ML Engineer" />
-    <title>Sourav Danyal | AI & Data Science Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <meta name="theme-color" content="#f7f6f2" />
     <script>
-      const titles = [
-        '⚡ Sourav Danyal',
-        '🤖 AI Engineer',
-        '🧠 ML Engineer',
-        '📊 Data Scientist',
-        '🔍 RAG Specialist',
-      ];
-      let idx = 0;
-      let intervalId = null;
-
-      function startCycling() {
-        if (intervalId) return; // already running, don't start again
-        intervalId = setInterval(() => {
-          idx = (idx + 1) % titles.length;
-          document.title = titles[idx];
-        }, 2500);
-      }
-
-      function stopCycling() {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          stopCycling();           // kill interval immediately
-          document.title = '👋 Come back to my portfolio!';
-        } else {
-          // Tab is visible again — resume from current index
-          document.title = titles[idx];
-          startCycling();
-        }
-      });
-
-      // Only start cycling when tab is actually visible
-      if (!document.hidden) {
-        startCycling();
-      }
+      (() => {
+        let saved;
+        try { saved = localStorage.getItem('portfolio-theme'); } catch {}
+        const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#181d19' : '#f7f6f2';
+      })();
     </script>
+    <meta name="description" content="Sourav Danyal is an AI and Data Science engineer building useful applications with machine learning, multi-agent systems, and retrieval-augmented generation. Explore his selected work." />
+    <meta property="og:title" content="Sourav Danyal — AI Engineer" />
+    <meta property="og:description" content="Independent mind. Intelligent systems. Selected work in generative AI, machine learning, and data science." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://www.souravdanyal.me/" />
+    <meta property="og:url" content="https://www.souravdanyal.me/" />
+    <meta property="og:site_name" content="Sourav Danyal" />
+    <meta property="og:image" content="https://www.souravdanyal.me/assets/social-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sourav Danyal — AI Engineer. Making AI work in the real world, alongside a copper wire sculpture." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sourav Danyal — AI Engineer" />
+    <meta name="twitter:description" content="Making AI work in the real world. Explore projects in generative AI, machine learning, and data science." />
+    <meta name="twitter:image" content="https://www.souravdanyal.me/assets/social-preview.png" />
+    <meta name="twitter:image:alt" content="Sourav Danyal — AI Engineer. Making AI work in the real world, alongside a copper wire sculpture." />
+    <title>Sourav Danyal — AI Engineer</title>
+    <link rel="preload" href="/fonts/dm-sans-400-750-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
   </head>
   <body>
     <div id="root"></div>

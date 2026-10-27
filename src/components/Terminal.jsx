@@ -1,150 +1,118 @@
 import { useState, useRef, useEffect } from 'react'
+import { ArrowUp, ArrowUpRight, ChevronDown, MessageCircle, X } from 'lucide-react'
 import { SYSTEM_PROMPT } from '../data'
 import styles from './Terminal.module.css'
 
 const CHIPS = [
-  { label: 'Skills',       q: 'What are his technical skills?' },
-  { label: 'Projects',     q: 'Tell me about his projects.' },
-  { label: 'Education',    q: 'What is his educational background?' },
-  { label: 'Opportunities',q: 'What opportunities is he looking for?' },
-  { label: 'Contact',      q: 'How can I contact Sourav?' },
+  { label: 'The projects', q: 'Tell me about his projects.' },
+  { label: 'Technical skills', q: 'What are his technical skills?' },
+  { label: 'Education', q: 'What is his educational background?' },
+  { label: 'Opportunities', q: 'What opportunities is he looking for?' },
+  { label: 'Get in touch', q: 'How can I contact Sourav?' },
 ]
 
 function formatAssistantText(text) {
-  return text
-    .replace(/^#{1,6}\s+/gm, '')
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/__(.*?)__/g, '$1')
-    .replace(/\*([^*\n]+)\*/g, '$1')
-    .replace(/_([^_\n]+)_/g, '$1')
-    .replace(/`([^`\n]+)`/g, '$1')
-    .replace(/^\s*[-*]\s+/gm, '• ')
+  return text.replace(/^#{1,6}\s+/gm, '').replace(/\*\*(.*?)\*\*/g, '$1').replace(/__(.*?)__/g, '$1').replace(/\*([^*\n]+)\*/g, '$1').replace(/_([^_\n]+)_/g, '$1').replace(/`([^`\n]+)`/g, '$1').replace(/^\s*[-*]\s+/gm, '• ')
 }
 
 export default function Terminal({ open, onClose }) {
   const [messages, setMessages] = useState([])
-  const [input, setInput]       = useState('')
-  const [loading, setLoading]   = useState(false)
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const dialogRef = useRef(null)
   const historyRef = useRef(null)
-  const inputRef   = useRef(null)
+  const latestMessageRef = useRef(null)
+  const suggestionsRef = useRef(null)
+  const inputRef = useRef(null)
+  const requestRef = useRef(null)
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 300)
+    const dialog = dialogRef.current
+    if (!open) {
+      if (dialog.open) dialog.close()
+      return
+    }
+    if (!dialog.open) dialog.showModal()
+    inputRef.current?.focus()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previousOverflow }
   }, [open])
 
   useEffect(() => {
-    if (historyRef.current) historyRef.current.scrollTop = historyRef.current.scrollHeight
-  }, [messages, loading])
+    const history = historyRef.current
+    const latest = latestMessageRef.current
+    if (!open || !history || !latest) return
+    // Start at the new answer rather than jumping to the bottom of a long reply.
+    history.scrollTop += latest.getBoundingClientRect().top - history.getBoundingClientRect().top - 24
+  }, [messages, loading, open])
 
-  const send = async (text) => {
-    const q = text?.trim() || input.trim()
-    if (!q || loading) return
+  useEffect(() => () => requestRef.current?.abort(), [])
+
+  const send = async text => {
+    const question = (text || input).trim()
+    if (!question || requestRef.current) return
+    if (suggestionsRef.current) suggestionsRef.current.open = false
     setInput('')
-    if (q.toLowerCase() === 'exit') {
-      onClose()
-      return
-    }
-    setMessages(prev => [...prev, { role: 'user', text: q }])
+    if (question.toLowerCase() === 'exit') { onClose(); return }
+    setMessages(previous => [...previous, { role: 'user', text: question }])
     setLoading(true)
-
+    const controller = new AbortController()
+    requestRef.current = controller
+    const timeout = window.setTimeout(() => controller.abort(), 30000)
     try {
-      // Build message history for multi-turn
-      const history = messages.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }))
-      history.push({ role: 'user', content: q })
-
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      if (!import.meta.env.VITE_GROQ_API_KEY) throw new Error('Assistant unavailable')
+      const history = messages.map(message => ({ role: message.role, content: message.text }))
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'openai/gpt-oss-20b',
-          max_tokens: 600,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...history,
-          ],
-        }),
+        signal: controller.signal,
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}` },
+        body: JSON.stringify({ model: 'openai/gpt-oss-20b', max_tokens: 600, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history, { role: 'user', content: question }] }),
       })
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}))
-        throw new Error(err?.error?.message || `HTTP ${res.status}`)
-      }
-
-      const data   = await res.json()
-      const answer = data?.choices?.[0]?.message?.content || 'Sorry, I could not generate a response.'
-      setMessages(prev => [...prev, { role: 'assistant', text: answer }])
-    } catch (err) {
-      const msg = err.message?.includes('401') || err.message?.includes('403')
-        ? 'Groq API key not set. Add VITE_GROQ_API_KEY to your .env file and restart the dev server.'
-        : `Error: ${err.message}`
-      setMessages(prev => [...prev, { role: 'assistant', text: msg }])
+      if (!response.ok) throw new Error('Assistant unavailable')
+      const data = await response.json()
+      const answer = data?.choices?.[0]?.message?.content
+      if (typeof answer !== 'string' || !answer.trim()) throw new Error('Empty response')
+      setMessages(previous => [...previous, { role: 'assistant', text: answer }])
+    } catch {
+      setMessages(previous => [...previous, { role: 'assistant', text: 'I’m having trouble connecting right now. Please try again in a moment, or reach Sourav directly at souravdanyal04@gmail.com.' }])
     } finally {
+      window.clearTimeout(timeout)
+      requestRef.current = null
       setLoading(false)
     }
   }
 
   return (
-    <div className={`${styles.overlay} ${open ? styles.open : ''}`}>
-      <div className={styles.panel} role="dialog" aria-label="AI Terminal">
-        {/* Title bar */}
-        <div className={styles.bar}>
-          <div className={styles.dots}>
-            <button type="button" className={`${styles.dot} ${styles.red}`} onClick={onClose} title="Exit chatbot" aria-label="Exit chatbot" />
-            <span className={`${styles.dot} ${styles.yellow}`} />
-            <span className={`${styles.dot} ${styles.green}`} />
+    <dialog ref={dialogRef} className={styles.dialog} onCancel={onClose} onClose={onClose} onClick={event => { if (event.target === event.currentTarget) onClose() }} aria-labelledby="assistant-title" aria-describedby="assistant-description">
+      <div className={styles.panel}>
+        <header className={styles.header}>
+          <div className={styles.identity}><span className={styles.headerIcon} aria-hidden="true"><MessageCircle size={20} strokeWidth={1.5} /></span><div><h2 id="assistant-title">Portfolio assistant</h2><p id="assistant-description">Get to know Sourav and his work.</p></div></div>
+          <button onClick={onClose} aria-label="Close AI assistant"><X size={20} /></button>
+        </header>
+        <div className={styles.history} ref={historyRef} role="region" aria-label="Conversation" tabIndex={0}>
+          {messages.length === 0 && <div className={styles.welcome}>
+            <div className={styles.intro}><div className={styles.mark}>sd<span>.</span></div><h3>A little more <em>about Sourav.</em></h3><p>Explore the projects, the thinking behind them, or what I’d like to build next. Where would you like to start?</p></div>
+            <span className={styles.promptLabel}>A few starting points</span>
+            <div className={styles.chips}>{CHIPS.map(chip => <button key={chip.label} onClick={() => send(chip.q)} disabled={loading}>{chip.label}<ArrowUpRight size={16} aria-hidden="true" /></button>)}</div>
+          </div>}
+          <div role="log" aria-label="Messages" aria-live="polite" aria-busy={loading}>
+            {messages.map((message, index) => <div key={index} ref={index === messages.length - 1 ? latestMessageRef : null} className={`${styles.message} ${message.role === 'user' ? styles.user : styles.ai}`}><span>{message.role === 'user' ? 'You' : 'Sourav’s assistant'}</span><p>{message.role === 'assistant' ? formatAssistantText(message.text) : message.text}</p></div>)}
+            {loading && <div className={styles.thinking} role="status"><span aria-hidden="true" />Thinking it through…</div>}
           </div>
-          <span className={styles.barTitle}>sourav@portfolio ~ AI Assistant</span>
+          {messages.length > 0 && <details ref={suggestionsRef} className={styles.suggestions}>
+            <summary>Explore another topic <ChevronDown size={15} /></summary>
+            <div className={styles.chips}>{CHIPS.map(chip => <button key={chip.label} onClick={() => send(chip.q)} disabled={loading}>{chip.label}<ArrowUpRight size={16} aria-hidden="true" /></button>)}</div>
+          </details>}
         </div>
-
-        {/* Boot */}
-        <div className={styles.boot}>
-          <p><span className={styles.bootCyan}>Initializing Sourav's AI Assistant…</span></p>
-          <p className={styles.bootMute}>Ask me anything about Sourav — skills, projects, education, or contact. Type "exit" to close.</p>
-          <p className={styles.bootMute}>─────────────────────────────────────────</p>
-        </div>
-
-        {/* History */}
-        <div className={styles.history} ref={historyRef}>
-          {messages.map((m, i) => (
-            <div className={`${styles.msg} ${m.role === 'user' ? styles.user : styles.ai}`} key={i}>
-              <div className={styles.msgLabel}>{m.role === 'user' ? '▶ you' : '◆ sourav-ai'}</div>
-              <div className={styles.msgBody}>{m.role === 'assistant' ? formatAssistantText(m.text) : m.text}</div>
-            </div>
-          ))}
-          {loading && (
-            <div className={`${styles.msg} ${styles.ai}`}>
-              <div className={styles.msgLabel}>◆ sourav-ai</div>
-              <div className={`${styles.msgBody} ${styles.typing}`}>Thinking<span className={styles.dots3}>...</span></div>
-            </div>
-          )}
-        </div>
-
-        {/* Chips */}
-        <div className={styles.chips}>
-          {CHIPS.map(c => (
-            <button key={c.label} className={styles.chip} onClick={() => send(c.q)}>{c.label}</button>
-          ))}
-        </div>
-
-        {/* Input */}
-        <div className={styles.inputRow}>
-          <span className={styles.prompt}>sourav@ai $</span>
-          <input
-            ref={inputRef}
-            className={styles.input}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && send()}
-            placeholder="Ask me anything about Sourav…"
-            autoComplete="off"
-            spellCheck={false}
-          />
-          <button className={styles.sendBtn} onClick={() => send()} disabled={loading}>↵</button>
+        <div className={styles.composer}>
+          <form className={styles.inputRow} onSubmit={event => { event.preventDefault(); send() }}>
+            <input ref={inputRef} value={input} onChange={event => setInput(event.target.value)} placeholder="Ask me about Sourav…" aria-label="Your question about Sourav" autoComplete="off" maxLength={1000} />
+            <button type="submit" disabled={loading || !input.trim()} aria-label="Send question"><ArrowUp size={20} /></button>
+          </form>
+          <div className={styles.note}>AI can make mistakes. Get in touch for details.</div>
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }

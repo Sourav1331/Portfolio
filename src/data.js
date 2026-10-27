@@ -65,7 +65,7 @@ export const PROJECTS = [
     tags: ['FastAPI', 'React', 'LangGraph', 'RAG'],
     tagColor: 'cyan',
     featured: true,
-    features: ['Multi-agent researcher, summarizer, writer, and fact-checker workflow', 'Real-time streaming with Server-Sent Events', 'Dockerized frontend/backend deployment architecture'],
+    features: ['Multi-agent researcher, summarizer, writer, and fact-checker workflow', 'Workflow updates streamed with Server-Sent Events', 'Shared LangGraph state with report copy and download'],
     github: 'https://github.com/Sourav1331/Multi-Agent-Research-System',
     live: 'https://multi-agent-research-system-rose.vercel.app/',
     stack: [
@@ -81,8 +81,8 @@ export const PROJECTS = [
     id: 2,
     emoji: 'DOC',
     title: 'DocRAG Studio: AI Document Analyzer',
-    desc: 'Production-ready full-stack RAG application for semantic search, document chat, and question answering across PDF, CSV, Excel, TXT, and DOCX files.',
-    tags: ['FastAPI', 'LangChain', 'ChromaDB', 'Groq'],
+    desc: 'Full-stack RAG application for document chat across PDF, CSV, Excel, TXT, and DOCX files, with Qdrant retrieval, FastEmbed embeddings, and Supabase file metadata.',
+    tags: ['FastAPI', 'LangChain', 'Qdrant', 'Groq'],
     tagColor: 'green',
     features: ['Per-file context isolation with source-cited responses', 'RESTful APIs for scalable document ingestion and querying', 'Containerized frontend/backend with Docker'],
     github: 'https://github.com/Sourav1331/rag-document-analyzer',
@@ -90,8 +90,8 @@ export const PROJECTS = [
     stack: [
       { label: 'PDF / CSV / XLSX / TXT / DOCX', type: 'data' },
       { label: 'Chunking + Metadata', type: 'process' },
-      { label: 'Hugging Face Embeddings', type: 'model' },
-      { label: 'ChromaDB Vector Store', type: 'framework' },
+      { label: 'FastEmbed Embeddings', type: 'model' },
+      { label: 'Qdrant + Supabase', type: 'framework' },
       { label: 'FastAPI RAG APIs', type: 'api' },
       { label: 'React Document Chat', type: 'output' },
     ],
@@ -169,7 +169,7 @@ SKILLS:
 
 PROJECTS:
 1. Multi-Agent AI Research Assistant - Full-stack AI research assistant using FastAPI, React, LangGraph, LangChain, Groq LLaMA 3.1, Tavily Search, ChromaDB, and Hugging Face embeddings.
-2. DocRAG Studio: AI Document Analyzer - Production-ready full-stack RAG app for semantic search, document chat, and QA across PDF, CSV, Excel, TXT, and DOCX files.
+2. DocRAG Studio: AI Document Analyzer - Full-stack RAG app for semantic search, document chat, and QA across PDF, CSV, Excel, TXT, and DOCX files. Current architecture uses Qdrant Cloud vectors, Supabase file metadata, FastEmbed embeddings, LangChain, FastAPI, React, and Groq. Retrieval is filtered by session, analyzer, and file. No measured accuracy or performance results are provided.
 3. Movie Recommendation System - Streamlit content-based recommendation engine using cosine similarity on 5000+ TMDB films, with poster/trailer retrieval and secure TMDB API key handling.
 CERTIFICATIONS:
 - The Ultimate Job Ready Data Science Course — CodeWithHarry (Oct 2025)

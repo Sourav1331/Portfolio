@@ -17,7 +17,6 @@ const GROUP_LABELS = {
 
 export default function Constellation() {
   const canvasRef = useRef(null)
-  const [hovered, setHovered] = useState(null)
   const [tooltip, setTooltip] = useState({ x: 0, y: 0, node: null })
   const animRef = useRef(null)
   const nodesRef = useRef([])
@@ -134,7 +133,6 @@ export default function Constellation() {
         if (Math.sqrt(dx*dx + dy*dy) < n.r + 6) found = n
       })
       hoveredId = found?.id || null
-      setHovered(found?.id || null)
       if (found) {
         setTooltip({ x: found.wx, y: found.wy, node: found })
         canvas.style.cursor = 'pointer'
@@ -146,7 +144,7 @@ export default function Constellation() {
 
     canvas.addEventListener('mousemove', onMove)
     canvas.addEventListener('mouseleave', () => {
-      hoveredId = null; setHovered(null); setTooltip({ x:0, y:0, node:null })
+      hoveredId = null; setTooltip({ x:0, y:0, node:null })
     })
 
     return () => {
